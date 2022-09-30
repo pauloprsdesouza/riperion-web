@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getAutenticatedUser } from "../../authorization/jwt-token";
+import { getAutenticatedUser, logout } from "../../authorization/jwt-token";
 import { routes } from "../../routes/routes";
 
 const NavBar: React.FC = () => {
@@ -14,8 +14,8 @@ const NavBar: React.FC = () => {
         return user ? <span>{user}</span> : null;
     }
 
-    return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
+    function renderizeNavbar() {
+        return user ? <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
             <div className="container">
                 <a className="navbar-brand" href="/">E-Nutrition</a>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,7 +38,7 @@ const NavBar: React.FC = () => {
                             </button>
                             <ul className="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
                                 <li><button type="button" className="dropdown-item btn btn-link" onClick={() => {
-
+                                    logout();
                                     window.location.href = "/";
                                 }}>Logout</button></li>
                             </ul>
@@ -46,7 +46,13 @@ const NavBar: React.FC = () => {
                     </ul>
                 </div>
             </div>
-        </nav>)
+        </nav> : null;
+    }
+
+    return (<>
+        {renderizeNavbar()}
+    </>
+    )
 }
 
 export default NavBar;

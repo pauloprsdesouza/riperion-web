@@ -31,7 +31,7 @@ const RecommendationListing: React.FC = () => {
 
     function renderizeRecommendations() {
         return recommendations && !loading ? recommendations.map(recommendation => (
-            <div key={recommendation.id} className="card card-width shadow border-0 mb-3">
+            <div key={recommendation.id} className="card card-width shadow border-0 mb-3 me-auto ms-auto">
                 <div className="card-body">
                     <TwitterTweetEmbed tweetId={recommendation.tweetId} options={{ lang: "pt" }} />
                 </div>
@@ -44,9 +44,9 @@ const RecommendationListing: React.FC = () => {
     }
 
     return (
-        <div className="d-flex flex-column align-self-center">
+        <>
             {renderizeRecommendations()}
-        </div>
+        </>
     )
 }
 

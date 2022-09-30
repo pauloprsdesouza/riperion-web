@@ -91,7 +91,7 @@ const RatingStar: React.FC<Props> = ({ recommendation }) => {
         ))
     }
 
-    return (<div className="d-flex flex-row align-items-center justify-content-around ratings">
+    return (<div className="d-flex flex-row align-items-center justify-content-around ratings-height">
         {renderizeRatings()}
     </div>)
 }
