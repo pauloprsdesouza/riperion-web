@@ -1,14 +1,14 @@
+import "./recommendation-listing.css"
 import { AxiosResponse } from "axios";
-import React, { useEffect, useState } from "react";
 import { getRecommendationsByActiveUser } from "../../api/services/recommendations-service";
 import { RecommendationListType } from "../../model/recommendations/recommendation-response";
-import RatingStar from "./rating-stars";
 import { TwitterTweetEmbed } from 'react-twitter-embed';
-import "./recommendation-listing.css"
+import RatingStar from "./rating-stars";
+import React, { useEffect, useState } from "react";
 
 const RecommendationListing: React.FC = () => {
-    const [recommendations, setRecommendations] = useState<RecommendationListType>([]);
     const [loading, setLoading] = useState<boolean>(false);
+    const [recommendations, setRecommendations] = useState<RecommendationListType>([]);
 
     useEffect(() => {
         loadRecommendations()

@@ -1,15 +1,12 @@
-import React from 'react';
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import LoginPage from './pages/login/login';
 import NavBar from './components/navbar/nav-bar';
+import React from 'react';
+import RecommendationPage from './pages/recommendations/recommendation';
 import SignIn from './features/login/sign-in';
 import SignUp from './features/login/sign-up';
-import RecommendationPage from './pages/recommendations/recommendation';
-
-declare global {
-  interface Window { twttr: any; }
-}
+import DomainPage from './pages/domains/domain';
 
 function App() {
   return (
@@ -23,6 +20,7 @@ function App() {
               <Route path='signup' element={<SignUp />} />
             </Route>
           </Route>
+          <Route path='domains' element={<DomainPage />} />
           <Route path='recommendations' element={<RecommendationPage />} />
         </Routes>
       </div>

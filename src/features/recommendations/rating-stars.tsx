@@ -1,9 +1,9 @@
+import "./rating-stars.css"
 import { AxiosResponse } from "axios";
-import React, { useEffect, useState } from "react";
 import { evaluateRecommendation } from "../../api/services/recommendations-service";
 import { PutRecommendationRequest } from "../../model/recommendations/put-recommendation-request";
 import { RecommendationResponse } from "../../model/recommendations/recommendation-response";
-import "./rating-stars.css"
+import React, { useEffect, useState } from "react";
 
 interface Props {
     recommendation: RecommendationResponse

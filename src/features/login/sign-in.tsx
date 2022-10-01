@@ -1,19 +1,19 @@
-import { AxiosError, AxiosResponse } from 'axios';
-import React, { useRef, useState } from 'react';
-import { singInUser } from '../../api/services/users-service';
 import { autenticaded } from '../../authorization/jwt-token';
-import AlertError from '../../components/alerts/alert-error';
+import { AxiosError, AxiosResponse } from 'axios';
 import { getErrorMessage } from '../../model/errors/errors-enum';
 import { PostSignInRequest } from '../../model/login/post signin-request';
+import { singInUser } from '../../api/services/users-service';
+import AlertError from '../../components/alerts/alert-error';
+import LoadingButton from '../../components/loading/loading-button';
+import React, { useRef, useState } from 'react';
 
 const SignIn: React.FC = () => {
     const [email, setEmail] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
-    const [loading, setLoading] = useState<boolean>();
     const [errors, setErrors] = useState<string[]>([]);
-
-    const formLogin = useRef<HTMLFormElement>(null);
     const [isFormValid, setIsFormValid] = useState(false);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [password, setPassword] = useState<string>("");
+    const formLogin = useRef<HTMLFormElement>(null);
 
     function validateForm() {
         if (formLogin.current)
@@ -55,12 +55,6 @@ const SignIn: React.FC = () => {
             });
     }
 
-    function rendereizeLoadingValidate() {
-        return loading ? <div><div className="spinner-border spinner-border-sm" role="status">
-            <span className="visually-hidden"></span>
-        </div><span>Validando...</span> </div> : <span>Validar</span>;
-    }
-
     return (
         <div className='col-4 me-auto ms-auto mt-5'>
             {
@@ -68,10 +62,10 @@ const SignIn: React.FC = () => {
                     <AlertError key={index} message={message} />
                 ))
             }
-            <div className='card shadow border-0'>
+            <div className='card shadow border-0 mb-4'>
                 <div className='card-body'>
                     <h4 className='card-title mb-4'>Login</h4>
-                    <form className='needs-validation was-validated mb-4' ref={formLogin}
+                    <form className='needs-validation was-validated' ref={formLogin}
                         onChange={validateForm}
                         onSubmit={(event) => {
                             signIn(event);
@@ -86,7 +80,7 @@ const SignIn: React.FC = () => {
                                     setEmail(event.target.value);
                                 }} />
                         </div>
-                        <div className='form-group mb-4'>
+                        <div className='form-group mb-3'>
                             <div className='d-flex flex-row justify-content-between'>
                                 <label className="form-label">Senha</label>
                                 <a className='form-label text-decoration-none' href='/'>Esqueci a senha</a>
@@ -102,18 +96,17 @@ const SignIn: React.FC = () => {
                             <button type='submit'
                                 className='btn btn-primary'
                                 disabled={loading || !isFormValid}>
-                                {rendereizeLoadingValidate()}
+                                <LoadingButton textLoading='Validando...' textShowing='Validar' loading={loading} />
                             </button>
                         </div>
                     </form>
-
-                    <div className='card'>
-                        <div className='card-body'>
-                            <span>Não tem cadastro?</span>&nbsp;<a className='form-label text-decoration-none' href='/'>Clique aqui</a>
-                        </div>
-                    </div>
                 </div>
-            </div >
+            </div>
+            <div className='card'>
+                <div className='card-body'>
+                    <span>Não tem cadastro?</span>&nbsp;<a className='form-label text-decoration-none' href='signup'>Clique aqui</a>
+                </div>
+            </div>
         </div>)
 }
 
