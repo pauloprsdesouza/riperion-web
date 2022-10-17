@@ -1,7 +1,7 @@
 import { autenticaded } from '../../authorization/jwt-token';
 import { AxiosError, AxiosResponse } from 'axios';
 import { getErrorMessage } from '../../model/errors/errors-enum';
-import { PostSignUpRequest } from '../../model/login/post-signup-request';
+import { PostSignUpRequest } from '../../model/users/post-signup-request';
 import { singUpUser } from '../../api/services/users-service';
 import AlertError from '../../components/alerts/alert-error';
 import LoadingButton from '../../components/loading/loading-button';
@@ -41,7 +41,7 @@ const SignUp: React.FC = () => {
                 if (statusCode === 422) {
                     var errorsTemp: string[] = [];
 
-                    errors.map(message => {
+                    errors.forEach(message => {
                         errorsTemp.push(getErrorMessage(message))
                     });
 

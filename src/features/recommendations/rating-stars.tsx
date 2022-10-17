@@ -22,7 +22,6 @@ class Rating {
 }
 
 const RatingStar: React.FC<Props> = ({ recommendation }) => {
-    const [loading, setLoading] = useState<boolean>();
     const [ratings, setRatings] = useState<Rating[]>([
         new Rating(1, false, false),
         new Rating(2, false, false),
@@ -38,36 +37,40 @@ const RatingStar: React.FC<Props> = ({ recommendation }) => {
     }, [recommendation]);
 
     function evaluate(currentRating: Rating): void {
-        setLoading(true);
-
-        selectRating(currentRating);
+        ratingLoading(currentRating);
 
         evaluateRecommendation(recommendation.id, new PutRecommendationRequest(currentRating.level))
             .then((response: AxiosResponse) => {
-                selectRating(new Rating(response.data.rating as number, false, false));
+                selectRating(new Rating(response.data.rating as number, currentRating.selected, false));
             })
             .catch((errors) => {
 
             })
             .finally(() => {
-                selectRating(currentRating);
+                ratingLoading(currentRating);
             })
+    }
+
+    function ratingLoading(currentRating: Rating) {
+        var ratingsTemp: Rating[] = [...ratings];
+
+        currentRating.loading = !currentRating.loading;
+
+        setRatings(ratingsTemp);
     }
 
     function selectRating(currentRating: Rating) {
         var ratingsTemp: Rating[] = [...ratings];
 
-        currentRating.loading = !currentRating.loading;
-
         if (!currentRating.selected) {
             for (var i = 0; i < currentRating.level; i++) {
                 ratingsTemp[i].selected = true;
             }
-
         } else {
-            for (var i = 5; i > currentRating.level; i--) {
-                ratingsTemp[i - 1].selected = false;
+            for (var i = 4; i >= currentRating.level; i--) {
+                ratingsTemp[i].selected = false;
             }
+
             if (currentRating.level === 1) {
                 ratingsTemp[0].selected = false;
             }

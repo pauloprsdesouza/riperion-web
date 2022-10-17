@@ -5,6 +5,8 @@ import { RecommendationListType } from "../../model/recommendations/recommendati
 import { TwitterTweetEmbed } from 'react-twitter-embed';
 import RatingStar from "./rating-stars";
 import React, { useEffect, useState } from "react";
+import LoadingDiv from "../../components/loading/loading-div";
+import { ErrorsStatusEnum } from "../../model/errors/errors-enum";
 
 const RecommendationListing: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(false);
@@ -21,8 +23,13 @@ const RecommendationListing: React.FC = () => {
             .then((response: AxiosResponse) => {
                 setRecommendations(response.data.recommendations)
             })
-            .catch((errors) => {
+            .catch((error) => {
+                var response: any = error.response?.data;
+                var errors: string[] = response.errors;
 
+                if (errors.filter((err) => err === ErrorsStatusEnum.USER_DOES_NOT_HAVE_PROFILE)) {
+                    window.location.href = "/domains";
+                }
             })
             .finally(() => {
                 setLoading(false)
@@ -40,7 +47,7 @@ const RecommendationListing: React.FC = () => {
                     <RatingStar recommendation={recommendation} />
                 </div>
             </div>
-        )) : null;
+        )) : <LoadingDiv loading={loading} textLoading="Carregando..." />;
     }
 
     return (

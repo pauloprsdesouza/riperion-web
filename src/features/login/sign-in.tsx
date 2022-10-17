@@ -1,11 +1,15 @@
 import { autenticaded } from '../../authorization/jwt-token';
 import { AxiosError, AxiosResponse } from 'axios';
 import { getErrorMessage } from '../../model/errors/errors-enum';
-import { PostSignInRequest } from '../../model/login/post signin-request';
+import { PostSignInRequest } from '../../model/users/post signin-request';
 import { singInUser } from '../../api/services/users-service';
 import AlertError from '../../components/alerts/alert-error';
 import LoadingButton from '../../components/loading/loading-button';
 import React, { useRef, useState } from 'react';
+
+declare global {
+    var grecaptcha: any;
+}
 
 const SignIn: React.FC = () => {
     const [email, setEmail] = useState<string>("");
@@ -20,6 +24,8 @@ const SignIn: React.FC = () => {
             setIsFormValid(formLogin.current.checkValidity());
     }
 
+
+
     function signIn(event: React.FormEvent): void {
         event.preventDefault();
 
@@ -29,7 +35,7 @@ const SignIn: React.FC = () => {
         singInUser(new PostSignInRequest(email, password))
             .then((response: AxiosResponse) => {
                 autenticaded(response.data.token, response.data.user.name);
-                window.location.href = "/recommendations";
+                window.location.href = response.data.user.hasProfile ? "/recommendations" : "/domains";
             })
             .catch((error: AxiosError) => {
                 var response: any = error.response?.data;
@@ -39,7 +45,7 @@ const SignIn: React.FC = () => {
                 if (statusCode === 422) {
                     var errorsTemp: string[] = [];
 
-                    errors.map(message => {
+                    errors.forEach(message => {
                         errorsTemp.push(getErrorMessage(message))
                     });
 
@@ -55,6 +61,20 @@ const SignIn: React.FC = () => {
             });
     }
 
+    function validate(event: React.FormEvent) {
+        event.preventDefault();
+
+        console.log(process.env.REACT_APP_ID_RECAPTCHA);
+
+        window.grecaptcha.ready(function () {
+            window.grecaptcha.execute(process.env.REACT_APP_ID_RECAPTCHA, { action: 'submit' })
+                .then(function (token: any) {
+                    console.log("2");
+                    signIn(event);
+                });
+        });
+    }
+
     return (
         <div className='col-4 me-auto ms-auto mt-5'>
             {
@@ -68,7 +88,7 @@ const SignIn: React.FC = () => {
                     <form className='needs-validation was-validated' ref={formLogin}
                         onChange={validateForm}
                         onSubmit={(event) => {
-                            signIn(event);
+                            validate(event);
                         }}
                         noValidate>
                         <div className='form-group mb-3'>

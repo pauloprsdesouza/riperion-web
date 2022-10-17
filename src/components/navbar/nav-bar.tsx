@@ -17,7 +17,7 @@ const NavBar: React.FC = () => {
     function renderizeNavbar() {
         return user ? <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
             <div className="container">
-                <a className="navbar-brand" href="/">E-Nutrition</a>
+                <a className="navbar-brand" href="/">RecSocial</a>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>

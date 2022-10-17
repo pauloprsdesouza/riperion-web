@@ -1,32 +1,20 @@
-import { AxiosError, AxiosResponse } from "axios";
-import React, { useEffect, useState } from "react";
-import { findAllDomains } from "../../api/services/domains-service";
+import React from "react";
 import { DomainResponseListType } from "../../model/domains/domain-response";
 
-const DomainListing: React.FC = () => {
-    const [domains, setDomains] = useState<DomainResponseListType>([]);
-    const [loading, setLoading] = useState<boolean>();
+interface Props {
+    domains: DomainResponseListType,
+    selectDomain: Function
+}
 
-    useEffect(() => {
-        setLoading(true);
-
-        findAllDomains()
-            .then((response: AxiosResponse) => {
-                setDomains(response.data.domains);
-            })
-            .catch((error: AxiosError) => {
-
-            })
-            .finally(() => {
-                setLoading(false);
-            })
-    }, [])
+const DomainListing: React.FC<Props> = ({ domains, selectDomain }) => {
 
     return (<div className="row justify-content-between">
         {
             domains.map(domain => (
                 <div key={domain.id} className="col p-1">
-                    <button className="btn btn-outline-primary text-nowrap" >{domain.name}</button>
+                    <button type="button" className={`btn btn-sm ${domain.active ? "btn-secondary" : "btn-outline-secondary"} text-nowrap`} onClick={() => {
+                        selectDomain(domain);
+                    }}>{domain.name}</button>
                 </div>
             ))
         }
