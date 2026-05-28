@@ -1,29 +1,32 @@
 # Riperion Web
 
+[![License](https://img.shields.io/github/license/pauloprsdesouza/riperion-web)](./LICENSE)
+[![Last Commit](https://img.shields.io/github/last-commit/pauloprsdesouza/riperion-web)](https://github.com/pauloprsdesouza/riperion-web/commits)
+[![Top Language](https://img.shields.io/github/languages/top/pauloprsdesouza/riperion-web)](https://github.com/pauloprsdesouza/riperion-web)
+
+## Overview
 Frontend application for the Riperion platform.
 
-## What this repository contains
-- React-based web client
-- UI flows for Riperion user interactions
-- Build/test scripts for local development
-
-## Tech stack
-- React
+## Tech Stack
 - TypeScript
-- npm
+- Node.js / npm ecosystem
 
-## Project structure
-- `src/` - application source code
+## Repository Structure
+- `src/` - main source code
 - `public/` - static assets
 
-## Getting started
+## Quick Start
 ```bash
 npm install
 npm start
 ```
 
-## Build and test
-```bash
-npm run build
-npm test
-```
+## Validation
+- Run local build and tests where available.
+- Validate main workflows/endpoints before opening pull requests.
+
+## Contributing
+See `CONTRIBUTING.md` for contribution and PR guidelines.
+
+## Status
+Actively maintained by Paulo Roberto de Souza.
