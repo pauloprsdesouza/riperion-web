@@ -2,12 +2,28 @@
 
 Frontend application for the Riperion platform.
 
-## Purpose
-Delivers user-facing interfaces and integrations for Riperion services.
+## What this repository contains
+- React-based web client
+- UI flows for Riperion user interactions
+- Build/test scripts for local development
 
-## Tech Stack
+## Tech stack
+- React
 - TypeScript
-- Web frontend framework
+- npm
 
-## Status
-Maintained repository.
+## Project structure
+- `src/` - application source code
+- `public/` - static assets
+
+## Getting started
+```bash
+npm install
+npm start
+```
+
+## Build and test
+```bash
+npm run build
+npm test
+```
